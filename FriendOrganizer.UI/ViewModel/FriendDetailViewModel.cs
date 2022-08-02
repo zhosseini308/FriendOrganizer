@@ -10,6 +10,9 @@ using FriendOrganizer.UI.Data.Repositories;
 using FriendOrganizer.Model;
 using System;
 using FriendOrganizer.UI.View.Services;
+using FriendOrganizer.UI.Data.Lookups;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace FriendOrganizer.UI.ViewModel
 {
@@ -18,33 +21,52 @@ namespace FriendOrganizer.UI.ViewModel
         private IFriendRepository _friendRepository;
         private IEventAggregator _eventAggregator;
         private IMessageDialogService _messageDialogService;
+        private IProgrammingLanguageLookupDataService _programmingLanguageLookupDataService;
         private FriendWrapper _friend;
         private bool _hasChanges;
+       
 
         public ICommand SaveCommand { get; }
         public ICommand DeleteCommand { get; }
+        public DelegateCommand AddPhoneNumberCommand { get; private set; }
+        public ObservableCollection<LookupItem> ProgrammingLanguages { get; }
 
         public FriendDetailViewModel(IFriendRepository FriendRepository,
             IEventAggregator eventAggregator,
-            IMessageDialogService messageDialogService)
+            IMessageDialogService messageDialogService,
+            IProgrammingLanguageLookupDataService programmingLanguageLookupDataService)
         {
             _friendRepository = FriendRepository;
             _eventAggregator = eventAggregator;
             _messageDialogService = messageDialogService;
+            _programmingLanguageLookupDataService = programmingLanguageLookupDataService;
 
             SaveCommand = new DelegateCommand(OnSaveExecute , OnSaveCanExecute);
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
+            //AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
+            //RemovePhoneNumberCommand = new DelegateCommand(OnRemovePhoneNumberExecute , OnRemovePhoneNumber);
+
+            ProgrammingLanguages = new ObservableCollection<LookupItem>();
 
 
         }
 
-        
+       
 
         public async Task LoadAsync(int? friendId)
         {
             var friend = friendId.HasValue
                 ? await _friendRepository.GetByIDAsync(friendId.Value)
                 : CreateNewFriend();
+
+            InitializeFriend(friend);
+
+            await LoadProgrammingLanguagesLookupAsync();
+
+        }
+
+        private void InitializeFriend(Friend friend)
+        {
             Friend = new FriendWrapper(friend);
 
             Friend.PropertyChanged += (s, e) =>
@@ -67,7 +89,18 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        
+        private async Task LoadProgrammingLanguagesLookupAsync()
+        {
+            //if this method called twice:
+            ProgrammingLanguages.Clear();
+            ProgrammingLanguages.Add(new NullLookupItem { DisplayMember= "-"});
+            var lookup = await _programmingLanguageLookupDataService.GetProgrammingLanguageLookupAsync();
+            foreach (var lookupItem in lookup)
+            {
+                ProgrammingLanguages.Add(lookupItem);
+            }
+        }
+
 
         public FriendWrapper Friend
         {
@@ -132,5 +165,25 @@ namespace FriendOrganizer.UI.ViewModel
                 _eventAggregator.GetEvent<AfterFriendDeletedEvent>().Publish(Friend.Id);
             }
         }
+
+        //private void OnAddPhoneNumberExecute()
+        //{
+        //    var newNumber = new FriendPhoneNumberWrapper(new FriendPhoneNumber());
+        //    newNumber.PropertyChanged += FriendPhoneNumberWrapper_PropertyChanged;
+        //    PhoneNumbers.Add(newNumber);
+        //    Friend.Model.PhoneNumbers.Add(newNumber.Model);
+        //    newNumber.Number = ""; //Trigger validation
+        //}
+        //private void FriendPhoneNumberWrapper_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    if (!HasChanges)
+        //    {
+        //        HasChanges = _friendRepository.HasChanges();
+        //    }
+        //    if (e.PropertyName == nameof(FriendPhoneNumberWrapper.HasErrors))
+        //    {
+        //        ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+        //    }
+        //}
     }
 }
