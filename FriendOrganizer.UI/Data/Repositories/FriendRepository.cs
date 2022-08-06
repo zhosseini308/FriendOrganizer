@@ -5,6 +5,7 @@ using System.Linq;
 using System;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.ComponentModel;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {
@@ -18,6 +19,10 @@ namespace FriendOrganizer.UI.Data.Repositories
 
 
         }
+
+        public Action<object, PropertyChangedEventArgs> PropertyChanged { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public FriendPhoneNumber Model => throw new NotImplementedException();
 
         public void Add(Friend friend)
         {
@@ -48,6 +53,16 @@ namespace FriendOrganizer.UI.Data.Repositories
         {
             _context.Friends.Remove(model);
 
+        }
+
+        public void RemovePhoneNumber(FriendPhoneNumber model)
+        {
+            _context.FriendPhoneNumbers.Remove(model);
+        }
+
+        public void RemovePhoneNumber(object model)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task SaveAsync()

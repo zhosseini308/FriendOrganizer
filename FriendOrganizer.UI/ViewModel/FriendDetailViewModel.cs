@@ -28,8 +28,10 @@ namespace FriendOrganizer.UI.ViewModel
 
         public ICommand SaveCommand { get; }
         public ICommand DeleteCommand { get; }
-        public DelegateCommand AddPhoneNumberCommand { get; private set; }
+        public ICommand RemovePhoneNumberCommand { get; private set; }
+        public ICommand AddPhoneNumberCommand { get; private set; }
         public ObservableCollection<LookupItem> ProgrammingLanguages { get; }
+        public ObservableCollection<FriendPhoneNumberWrapper> PhoneNumbers { get; set; }
 
         public FriendDetailViewModel(IFriendRepository FriendRepository,
             IEventAggregator eventAggregator,
@@ -43,15 +45,15 @@ namespace FriendOrganizer.UI.ViewModel
 
             SaveCommand = new DelegateCommand(OnSaveExecute , OnSaveCanExecute);
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
-            //AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
-            //RemovePhoneNumberCommand = new DelegateCommand(OnRemovePhoneNumberExecute , OnRemovePhoneNumber);
+            AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
+            RemovePhoneNumberCommand = new DelegateCommand(OnRemovePhoneNumberExecute , OnRemovePhoneNumberCanExecute);
 
             ProgrammingLanguages = new ObservableCollection<LookupItem>();
+            PhoneNumbers = new ObservableCollection<FriendPhoneNumberWrapper>();
 
 
         }
 
-       
 
         public async Task LoadAsync(int? friendId)
         {
@@ -126,7 +128,7 @@ namespace FriendOrganizer.UI.ViewModel
         }
 
        
-
+        public IFriendRepository SelectedPhoneNumber { get; set; }
 
         private bool OnSaveCanExecute()
         {
@@ -166,24 +168,43 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        //private void OnAddPhoneNumberExecute()
-        //{
-        //    var newNumber = new FriendPhoneNumberWrapper(new FriendPhoneNumber());
-        //    newNumber.PropertyChanged += FriendPhoneNumberWrapper_PropertyChanged;
-        //    PhoneNumbers.Add(newNumber);
-        //    Friend.Model.PhoneNumbers.Add(newNumber.Model);
-        //    newNumber.Number = ""; //Trigger validation
-        //}
-        //private void FriendPhoneNumberWrapper_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        //{
-        //    if (!HasChanges)
-        //    {
-        //        HasChanges = _friendRepository.HasChanges();
-        //    }
-        //    if (e.PropertyName == nameof(FriendPhoneNumberWrapper.HasErrors))
-        //    {
-        //        ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
-        //    }
-        //}
+        private void OnAddPhoneNumberExecute()
+        {
+            var newNumber = new FriendPhoneNumberWrapper(new FriendPhoneNumber());
+            newNumber.PropertyChanged += FriendPhoneNumberWrapper_PropertyChanged;
+            PhoneNumbers.Add(newNumber);
+            Friend.Model.PhoneNumbers.Add(newNumber.Model);
+            newNumber.Number = ""; //Trigger validation
+        }
+        private void FriendPhoneNumberWrapper_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (!HasChanges)
+            {
+                HasChanges = _friendRepository.HasChanges();
+            }
+            if (e.PropertyName == nameof(FriendPhoneNumberWrapper.HasErrors))
+            {
+                ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            }
+        }
+
+
+        private void OnRemovePhoneNumberExecute()
+        {
+            SelectedPhoneNumber.PropertyChanged -= FriendPhoneNumberWrapper_PropertyChanged;
+             _friendRepository.RemovePhoneNumber(SelectedPhoneNumber.Model);
+            PhoneNumbers.Remove(SelectedPhoneNumber);
+            SelectedPhoneNumber = null;
+            HasChanges = _friendRepository.HasChanges();
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+        }
+
+
+      
+        private bool OnRemovePhoneNumberCanExecute()
+        {
+            return SelectedPhoneNumber != null;
+        }
+
     }
 }

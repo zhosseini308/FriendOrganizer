@@ -22,6 +22,8 @@ namespace FriendOrganizer.DataAccess
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            //for saving name of tables singularly.
+            //for example in database,Friend table must save "Friend", not "Friends"
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 

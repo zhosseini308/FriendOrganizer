@@ -20,5 +20,12 @@ namespace FriendOrganizer.UI.Wrapper
         }
 
         public Action<object, PropertyChangedEventArgs> PropertyChanged { get; internal set; }
+        public FriendPhoneNumber Model { get; internal set; }
+        public string Number { get; set; }
+
+        internal static object HasErrors()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
