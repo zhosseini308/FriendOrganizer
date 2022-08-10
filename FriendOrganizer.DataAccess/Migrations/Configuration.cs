@@ -15,28 +15,25 @@ namespace FriendOrganizer.DataAccess.Migrations
 
         protected override void Seed(FriendOrganizer.DataAccess.FriendOrganizerDbContext context)
         {
-
             context.Friends.AddOrUpdate(
-                f => f.FirstName,
-                 new Friend { FirstName = "zahra", LastName = "hosseini" },
-                 new Friend { FirstName = "maryam", LastName = "asghari" },
-                 new Friend { FirstName = "mona", LastName = "khosravi" },
-                 new Friend { FirstName = "sanaz", LastName = "mohammadi" }
+              f => f.FirstName,
+                 new Friend { FirstName = "aa", LastName = "bb" },
+                 new Friend { FirstName = "ss", LastName = "dd" },
+                 new Friend { FirstName = "ee", LastName = "hh" },
+                 new Friend { FirstName = "bb", LastName = "ll" }
                 );
-
             context.ProgrammingLanguages.AddOrUpdate(
-                pl => pl.Name,
-                new ProgrammingLanguage { Name = "C#" },
-                new ProgrammingLanguage { Name = "TypeScript" },
-                new ProgrammingLanguage { Name = "F#" },
-                new ProgrammingLanguage { Name = "Swift" },
-                new ProgrammingLanguage { Name = "Java" }
-                );
+              pl => pl.Name,
+              new ProgrammingLanguage { Name = "C#" },
+              new ProgrammingLanguage { Name = "TypeScript" },
+              new ProgrammingLanguage { Name = "F#" },
+              new ProgrammingLanguage { Name = "Swift" },
+              new ProgrammingLanguage { Name = "Java" });
+
             context.SaveChanges();
 
-            context.FriendPhoneNumbers.AddOrUpdate(
-                pn => pn.Number,
-                new FriendPhoneNumber { Number = "+98 9112222334", FriendId = context.Friends.First().ID});
+            context.FriendPhoneNumbers.AddOrUpdate(pn => pn.Number,
+              new FriendPhoneNumber { Number = "+49 12345678", FriendId = context.Friends.First().ID });
 
         }
     }

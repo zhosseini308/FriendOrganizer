@@ -24,7 +24,7 @@ namespace FriendOrganizer.UI.Wrapper
             [CallerMemberName] string propertyName = null)
         {
             typeof(T).GetProperty(propertyName).SetValue(Model , value);
-            OnpropertyChanged(propertyName);
+            OnPropertyChanged(propertyName);
             ValidatePropertyInternal(propertyName , value);
         }
 

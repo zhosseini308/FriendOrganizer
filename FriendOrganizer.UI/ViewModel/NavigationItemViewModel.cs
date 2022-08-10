@@ -27,7 +27,7 @@ namespace FriendOrganizer.UI.ViewModel
              set
             {
                 _displayMember = value;
-                OnpropertyChanged();
+                OnPropertyChanged();
             }
         }
 

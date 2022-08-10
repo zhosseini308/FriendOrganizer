@@ -55,7 +55,7 @@ namespace FriendOrganizer.UI.ViewModel
         {
             get { return _friendDetailViewModel; }
             private set { _friendDetailViewModel = value;
-                OnpropertyChanged();
+                OnPropertyChanged();
             }
         }
 
