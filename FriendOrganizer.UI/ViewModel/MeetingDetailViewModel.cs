@@ -83,7 +83,7 @@ namespace FriendOrganizer.UI.ViewModel
 
             InitializeMeeting(meeting);
 
-           // _allFriends = await _meetingRepository.GetAllFriendsAsync();
+            //_allFriends = await _meetingRepository.GetAllFriendsAsync();
 
             SetupPicklist();
         }
