@@ -70,6 +70,14 @@
     <Compile Include="Migrations\202208100503587_fixDbProblems.designer.cs">
       <DependentUpon>202208100503587_fixDbProblems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208111921057_addedMetting.cs" />
+    <Compile Include="Migrations\202208111921057_addedMetting.designer.cs">
+      <DependentUpon>202208111921057_addedMetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208112050598_pendingAdd.cs" />
+    <Compile Include="Migrations\202208112050598_pendingAdd.designer.cs">
+      <DependentUpon>202208112050598_pendingAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -95,6 +103,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208100503587_fixDbProblems.resx">
       <DependentUpon>202208100503587_fixDbProblems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208111921057_addedMetting.resx">
+      <DependentUpon>202208111921057_addedMetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208112050598_pendingAdd.resx">
+      <DependentUpon>202208112050598_pendingAdd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
