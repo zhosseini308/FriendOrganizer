@@ -14,14 +14,14 @@ namespace FriendOrganizer.UI.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private IFriendDetailViewModel _friendDetailViewModel;
+        private IDetailViewModel _detailViewModel;
         private IEventAggregator _eventAggregator;
         private IMessageDialogService _messageDialogService;
         private Func<IFriendDetailViewModel> _friendDetailViewModelCreator;
 
 
-        public MainViewModel(INavigationViewModel navigationViewModel ,
-            Func<IFriendDetailViewModel> friendDetailViewModelCreator , 
+        public MainViewModel(INavigationViewModel navigationViewModel,
+            Func<IFriendDetailViewModel> friendDetailViewModelCreator,
             IEventAggregator eventAggregator,
             IMessageDialogService messageDialogService
             )
@@ -29,64 +29,71 @@ namespace FriendOrganizer.UI.ViewModel
             _eventAggregator = eventAggregator;
             _friendDetailViewModelCreator = friendDetailViewModelCreator;
             _messageDialogService = messageDialogService;
-            _eventAggregator.GetEvent<OpenFriendDetailViewEvent>()
-               .Subscribe(OnOpenFriendDetailView);
-            _eventAggregator.GetEvent<AfterFriendDeletedEvent>()
-                .Subscribe(AfterFriendDeleted);
+            _eventAggregator.GetEvent<OpenDetailViewEvent>()
+               .Subscribe(OnOpenDetailView);
+            _eventAggregator.GetEvent<AfterDetailDeletedEvent>()
+                .Subscribe(AfterDetailDeleted);
 
-            CreateNewFriendCommand = new DelegateCommand(OnCreateNewFriendExecuete);
+            CreateNewDetailCommand = new DelegateCommand<Type>(OnCreateNewDetailExecuete);
 
             NavigationViewModel = navigationViewModel;
 
         }
 
-       
+
         public async Task LoadAsync()
         {
             await NavigationViewModel.LoadAsync();
         }
 
-        public ICommand CreateNewFriendCommand { get; }
+        public ICommand CreateNewDetailCommand { get; }
 
         public INavigationViewModel NavigationViewModel { get; }
 
 
-        public IFriendDetailViewModel FriendDetailViewModel
+        public IDetailViewModel DetailViewModel
         {
-            get { return _friendDetailViewModel; }
-            private set { _friendDetailViewModel = value;
+            get { return _detailViewModel; }
+            private set
+            {
+                _detailViewModel = value;
                 OnPropertyChanged();
             }
         }
 
-        private async void OnOpenFriendDetailView(int? frientId)
+        private async void OnOpenDetailView(OpenDetailViewEventArgs args)
         {
-            if (FriendDetailViewModel != null && FriendDetailViewModel.HasChanges)
+            if (DetailViewModel != null && DetailViewModel.HasChanges)
             {
-                var result = _messageDialogService.ShowOkCancelDialog("You've made changes. Navigate away?" , "Question");
+                var result = _messageDialogService.ShowOkCancelDialog("You've made changes. Navigate away?", "Question");
                 if (result == MessageDialogResult.Cancel)
                 {
                     return;
                 }
             }
-            FriendDetailViewModel = _friendDetailViewModelCreator();
-            await FriendDetailViewModel.LoadAsync(frientId);
-
+            switch (args.ViewModelName)
+            {
+                case nameof(FriendDetailViewModel):
+                    DetailViewModel = _friendDetailViewModelCreator();
+                   
+                    break;
+            }
+            await DetailViewModel.LoadAsync(args.Id);
         }
 
-        private void OnCreateNewFriendExecuete()
+        private void OnCreateNewDetailExecuete(Type viewModelType)
         {
-            OnOpenFriendDetailView(null);
+            OnOpenDetailView(
+                new OpenDetailViewEventArgs {ViewModelName= viewModelType.Name});
         }
 
-        private void AfterFriendDeleted(int frientId)
+        private void AfterDetailDeleted(AfterDetailDeletedEventArgs args)
         {
-            FriendDetailViewModel = null;
+            DetailViewModel = null;
         }
 
-       
+
 
     }
 }
 
-    

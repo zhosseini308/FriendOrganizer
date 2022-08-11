@@ -43,7 +43,7 @@ namespace FriendOrganizer.UI.Wrapper
             set { SetValue(value); }
         }
 
-        
+
         public int? FavoriteLanguageId
         {
             get
