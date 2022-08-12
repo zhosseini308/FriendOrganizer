@@ -9,7 +9,8 @@ using System.ComponentModel;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {
-    public class FriendRepository : GenericRepository<Friend, FriendOrganizerDbContext>, IFriendRepository
+    public class FriendRepository : GenericRepository<Friend, FriendOrganizerDbContext>, 
+        IFriendRepository
     {
        
 
@@ -32,9 +33,15 @@ namespace FriendOrganizer.UI.Data.Repositories
               .SingleAsync(f => f.ID == friendId);
         }
 
-       
 
-      
+
+        public async Task<bool> HasMeetingsAsync(int friendId)
+        {
+            return await Context.Meetings.AsNoTracking()
+              .Include(m => m.Friends)
+              .AnyAsync(m => m.Friends.Any(f => f.ID == friendId));
+        }
+
         public void RemovePhoneNumber(FriendPhoneNumber model)
         {
             Context.FriendPhoneNumbers.Remove(model);

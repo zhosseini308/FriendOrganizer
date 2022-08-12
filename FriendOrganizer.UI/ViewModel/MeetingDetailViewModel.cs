@@ -83,9 +83,9 @@ namespace FriendOrganizer.UI.ViewModel
 
             InitializeMeeting(meeting);
 
-            //_allFriends = await _meetingRepository.GetAllFriendsAsync();
+            _allFriends = await _meetingRepository.GetAllFriendsAsync();
 
-           // SetupPicklist();
+            SetupPicklist();
         }
 
         protected override void OnDeleteExecute()
@@ -111,23 +111,23 @@ namespace FriendOrganizer.UI.ViewModel
             RaiseDetailSavedEvent(Meeting.Id, Meeting.Title);
         }
 
-        //private void SetupPicklist()
-        //{
-        //    var meetingFriendIds = Meeting.Model.Friends.Select(f => f.ID).ToList();
-        //    //var addedFriends = _allFriends.Where(f => meetingFriendIds.Contains(f.ID)).OrderBy(f => f.FirstName);
-        //   // var availableFriends = _allFriends.Except(addedFriends).OrderBy(f => f.FirstName);
+        private void SetupPicklist()
+        {
+            var meetingFriendIds = Meeting.Model.Friends.Select(f => f.ID).ToList();
+            var addedFriends = _allFriends.Where(f => meetingFriendIds.Contains(f.ID)).OrderBy(f => f.FirstName);
+            var availableFriends = _allFriends.Except(addedFriends).OrderBy(f => f.FirstName);
 
-        //    AddedFriends.Clear();
-        //    AvailableFriends.Clear();
-        //    foreach (var addedFriend in addedFriends)
-        //    {
-        //        AddedFriends.Add(addedFriend);
-        //    }
-        //    foreach (var availableFriend in availableFriends)
-        //    {
-        //        AvailableFriends.Add(availableFriend);
-        //    }
-        //}
+            AddedFriends.Clear();
+            AvailableFriends.Clear();
+            foreach (var addedFriend in addedFriends)
+            {
+                AddedFriends.Add(addedFriend);
+            }
+            foreach (var availableFriend in availableFriends)
+            {
+                AvailableFriends.Add(availableFriend);
+            }
+        }
 
         private Meeting CreateNewMeeting()
         {

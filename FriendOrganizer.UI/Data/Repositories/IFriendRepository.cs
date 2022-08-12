@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {
@@ -9,6 +10,7 @@ namespace FriendOrganizer.UI.Data.Repositories
     {
 
         void RemovePhoneNumber(FriendPhoneNumber model);
+        Task<bool> HasMeetingsAsync(int friendId);
         
     }
 }
