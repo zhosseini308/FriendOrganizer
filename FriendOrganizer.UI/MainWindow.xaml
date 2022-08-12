@@ -17,16 +17,14 @@
         <DataTemplate DataType="{x:Type viewModel:MeetingDetailViewModel}" >
             <view:MeetingDetailView/>
         </DataTemplate>
-        <!--<DataTemplate DataType="{x:Type viewModel:MeetingDetailViewModel}">
-            <view:MeetingDetailView/>
-        </DataTemplate>-->
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition />
@@ -36,6 +34,8 @@
             <MenuItem Header="Create">
                 <MenuItem Header="New friend" Command="{Binding CreateNewDetailCommand}"
                           CommandParameter="{x:Type viewModel:FriendDetailViewModel}"/>
+                <MenuItem Header="New meeting" Command="{Binding CreateNewDetailCommand}"
+                          CommandParameter="{x:Type viewModel:MeetingDetailViewModel}"/>
             </MenuItem>
         </Menu>
 

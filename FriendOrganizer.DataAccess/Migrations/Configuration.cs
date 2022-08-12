@@ -45,10 +45,12 @@ namespace FriendOrganizer.DataAccess.Migrations
                     DateTo = new DateTime(2018, 5, 26),
                     Friends = new List<Friend>
                     {
-                        context.Friends.Single(f => f.FirstName == "aa" && f.LastName == "bb"),
-                        context.Friends.Single(f => f.FirstName == "bb" && f.LastName == "ll")
+                        context.Friends.First(f => f.FirstName == "alireza" ),
+                        context.Friends.First(f => f.FirstName == "sara" )
                     }
                 });
+
+            context.SaveChanges();
         }
     }
 }
