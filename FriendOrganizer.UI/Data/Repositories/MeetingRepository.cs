@@ -3,6 +3,7 @@ using FriendOrganizer.DataAccess;
 using FriendOrganizer.Model;
 using System.Data.Entity;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {
@@ -24,6 +25,17 @@ namespace FriendOrganizer.UI.Data.Repositories
         {
             return await Context.Set<Friend>()
                 .ToListAsync();
+        }
+
+        public async Task ReloadFriendAsync(int friendId)
+        {
+            //when frind's name change, this name in meeting is changing too
+            var dbEntityEntry = Context.ChangeTracker.Entries<Friend>()
+       .SingleOrDefault(db => db.Entity.ID == friendId);
+            if (dbEntityEntry != null)
+            {
+                await dbEntityEntry.ReloadAsync();
+            }
         }
     }
 }
