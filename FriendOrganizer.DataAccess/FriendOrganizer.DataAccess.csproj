@@ -78,6 +78,10 @@
     <Compile Include="Migrations\202208112050598_pendingAdd.designer.cs">
       <DependentUpon>202208112050598_pendingAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208142032530_AddedRowVersionTofriend.cs" />
+    <Compile Include="Migrations\202208142032530_AddedRowVersionTofriend.designer.cs">
+      <DependentUpon>202208142032530_AddedRowVersionTofriend.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -109,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208112050598_pendingAdd.resx">
       <DependentUpon>202208112050598_pendingAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208142032530_AddedRowVersionTofriend.resx">
+      <DependentUpon>202208142032530_AddedRowVersionTofriend.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

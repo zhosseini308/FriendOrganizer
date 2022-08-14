@@ -18,35 +18,35 @@ namespace FriendOrganizer.DataAccess.Migrations
         {
             context.Friends.AddOrUpdate(
               f => f.FirstName,
-                 new Friend { FirstName = "aa", LastName = "bb" },
-                 new Friend { FirstName = "ss", LastName = "dd" },
-                 new Friend { FirstName = "ee", LastName = "hh" },
-                 new Friend { FirstName = "bb", LastName = "ll" }
+                 new Friend { FirstName = "asa", LastName = "bb" },
+                 new Friend { FirstName = "sss", LastName = "dd" },
+                 new Friend { FirstName = "esse", LastName = "hh" },
+                 new Friend { FirstName = "bsb", LastName = "ll" }
                 );
             context.ProgrammingLanguages.AddOrUpdate(
               pl => pl.Name,
-              new ProgrammingLanguage { Name = "C#" },
-              new ProgrammingLanguage { Name = "TypeScript" },
-              new ProgrammingLanguage { Name = "F#" },
-              new ProgrammingLanguage { Name = "Swift" },
-              new ProgrammingLanguage { Name = "Java" });
+              new ProgrammingLanguage { Name = "Css#" },
+              new ProgrammingLanguage { Name = "TypeSscript" },
+              new ProgrammingLanguage { Name = "Fs#" },
+              new ProgrammingLanguage { Name = "Swsift" },
+              new ProgrammingLanguage { Name = "Javsa" });
 
             context.SaveChanges();
 
             context.FriendPhoneNumbers.AddOrUpdate(pn => pn.Number,
-              new FriendPhoneNumber { Number = "+49 12345678", FriendId = context.Friends.First().ID });
+              new FriendPhoneNumber { Number = "+49 123456578", FriendId = context.Friends.First().ID });
 
 
             context.Meetings.AddOrUpdate(m => m.Title,
                 new Meeting
                 {
-                    Title = "Watching Soccer",
+                    Title = "Watching Socccer",
                     DateFrom = new DateTime(2018, 5, 26),
                     DateTo = new DateTime(2018, 5, 26),
                     Friends = new List<Friend>
                     {
-                        context.Friends.First(f => f.FirstName == "alireza" ),
-                        context.Friends.First(f => f.FirstName == "sara" )
+                        context.Friends.First(f => f.FirstName == "asa" ),
+                        context.Friends.First(f => f.FirstName == "bsb" )
                     }
                 });
 
