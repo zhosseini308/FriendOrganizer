@@ -42,18 +42,21 @@ namespace FriendOrganizer.UI.ViewModel
                 .Subscribe(AfterDetailClosed);
 
             CreateNewDetailCommand = new DelegateCommand<Type>(OnCreateNewDetailExecuete);
+            OpenSingleDetailViewCommand = new DelegateCommand<Type>(OnOpenSingleDetailViewExecuete);
 
             NavigationViewModel = navigationViewModel;
 
         }
 
       
+
         public async Task LoadAsync()
         {
             await NavigationViewModel.LoadAsync();
         }
 
         public ICommand CreateNewDetailCommand { get; }
+        public ICommand OpenSingleDetailViewCommand { get; }
 
         public INavigationViewModel NavigationViewModel { get; }
         public ObservableCollection<IDetailViewModel> DetailViewModels { get; }
@@ -93,6 +96,17 @@ namespace FriendOrganizer.UI.ViewModel
                     Id= nextNewItemId--,//unique id for new friends => let new friends be more than 1
                     //new friend ids are = -1 , -2 , ....
                     ViewModelName = viewModelType.Name});
+        }
+
+        private void OnOpenSingleDetailViewExecuete(Type viewModelType)
+        {
+            OnOpenDetailView(
+               new OpenDetailViewEventArgs
+               {
+                   Id = -1,//not unique => single tab is enough
+                    ViewModelName = viewModelType.Name
+               });
+
         }
 
         private void AfterDetailDeleted(AfterDetailDeletedEventArgs args)

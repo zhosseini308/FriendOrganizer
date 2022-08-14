@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {
@@ -17,6 +18,11 @@ namespace FriendOrganizer.UI.Data.Repositories
         {
             Context.Set<TEntity>().Add(model);
 
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        {
+            return await Context.Set<TEntity>().ToListAsync();
         }
 
         public virtual async Task<TEntity> GetByIdAsync(int Id)
