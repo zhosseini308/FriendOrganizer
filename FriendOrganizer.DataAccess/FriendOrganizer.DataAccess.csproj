@@ -82,6 +82,10 @@
     <Compile Include="Migrations\202208142032530_AddedRowVersionTofriend.designer.cs">
       <DependentUpon>202208142032530_AddedRowVersionTofriend.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208160026499_end20.cs" />
+    <Compile Include="Migrations\202208160026499_end20.designer.cs">
+      <DependentUpon>202208160026499_end20.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -116,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208142032530_AddedRowVersionTofriend.resx">
       <DependentUpon>202208142032530_AddedRowVersionTofriend.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208160026499_end20.resx">
+      <DependentUpon>202208160026499_end20.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

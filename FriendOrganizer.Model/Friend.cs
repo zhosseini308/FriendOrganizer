@@ -16,7 +16,7 @@ namespace FriendOrganizer.Model
         }
         public int ID { get; set; }
 
-        [Required]
+        [System.ComponentModel.DataAnnotations.Required]
         [StringLength(50)]
         public string FirstName { get; set; }
 

@@ -1,30 +1,20 @@
-﻿using FriendOrganizer.Model;
-using System.Collections.Generic;
-using FriendOrganizer.DataAccess;
-using System.Linq;
+﻿using FriendOrganizer.DataAccess;
+using FriendOrganizer.Model;
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Data.Entity;
-using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {
-    public class FriendRepository : GenericRepository<Friend, FriendOrganizerDbContext>, 
-        IFriendRepository
+    public class FriendRepository : GenericRepository<Friend, FriendOrganizerDbContext>,
+                                     IFriendRepository
     {
-       
-
         public FriendRepository(FriendOrganizerDbContext context)
-            :base(context)
+          : base(context)
         {
-         
-
         }
-
-
-
-
-
 
         public override async Task<Friend> GetByIdAsync(int friendId)
         {
@@ -32,8 +22,6 @@ namespace FriendOrganizer.UI.Data.Repositories
               .Include(f => f.PhoneNumbers)
               .SingleAsync(f => f.ID == friendId);
         }
-
-
 
         public async Task<bool> HasMeetingsAsync(int friendId)
         {
@@ -46,9 +34,5 @@ namespace FriendOrganizer.UI.Data.Repositories
         {
             Context.FriendPhoneNumbers.Remove(model);
         }
-
-      
-
-
     }
 }

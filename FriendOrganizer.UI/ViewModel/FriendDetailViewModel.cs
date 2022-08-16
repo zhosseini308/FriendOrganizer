@@ -85,6 +85,7 @@ namespace FriendOrganizer.UI.ViewModel
 
             };
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+
             if (Friend.Id == 0)
             {
                 // Little trick to trigger the validation

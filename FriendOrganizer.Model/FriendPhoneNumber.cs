@@ -5,7 +5,7 @@ namespace FriendOrganizer.Model
     public class FriendPhoneNumber
     {
         public int Id { get; set; }
-        [Required]
+        [System.ComponentModel.DataAnnotations.Required]
         [Phone]
         public string Number { get; set; }
         public int FriendId { get; set; }

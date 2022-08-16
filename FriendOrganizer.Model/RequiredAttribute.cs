@@ -2,7 +2,7 @@
 
 namespace FriendOrganizer.Model
 {
-    internal class RequredAttribute : Attribute
+    internal class RequiredAttribute : Attribute
     {
     }
 }
