@@ -53,7 +53,7 @@
                       SelectedItem="{Binding SelectedPhoneNumber , Mode=TwoWay}"
                       AutoGenerateColumns="False" RowHeaderWidth="0">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Phone Nembers" Width="*"
+                    <DataGridTextColumn Header="Phone Numbers" Width="*"
                                         ElementStyle= "{StaticResource DataGridColumnStyle}"
                                         EditingElementStyle="{StaticResource DataGridEditingColumnStyle}"
                                         Binding="{Binding Number , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
